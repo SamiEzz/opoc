@@ -47,7 +47,7 @@ class GasFees:
         return data
     
     def updateInstance(self):
-        if self.lastCacheUpdate > self.getTimeMS() + self.cacheUpdateRate:
+        if self.getTimeMS() > self.lastCacheUpdate + self.cacheUpdateRate:
             self.updateCache()
         #self.updateInstance()
         data = self.readCache()
