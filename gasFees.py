@@ -21,7 +21,7 @@ class GasFees:
     lastCacheUpdate: int
     cacheUpdateRate = 5000
     cachePath = "./ressources/gasFees.json"
-    ethGasUrl = "https://ethgasstation.info/api/ethgasAPI.json?"
+    ethGasUrl = "https://ethgasstation.info/api/ethgasAPI.json?" # https://data-api.defipulse.com/api/v1/egs/api/ethgasAPI.json?api-key=bea8a01d4ab34bfcd4364199a323c3becc8e0d8a3cc21e9dee75183c7921
 
     def __init__(self):
         print("Initiating GasFees module ...")
