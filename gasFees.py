@@ -2,7 +2,7 @@ import json
 from typing import Dict
 import requests
 from datetime import datetime
-
+import logging
 
 class GasFees:
     fast: int
@@ -22,16 +22,18 @@ class GasFees:
     cacheUpdateRate = 5000
     cachePath = "./ressources/gasFees.json"
     ethGasUrl = "https://ethgasstation.info/api/ethgasAPI.json?" # https://data-api.defipulse.com/api/v1/egs/api/ethgasAPI.json?api-key=bea8a01d4ab34bfcd4364199a323c3becc8e0d8a3cc21e9dee75183c7921
-
+    
     def __init__(self):
-        print("Initiating GasFees module ...")
+        logging.info("Initiating GasFees module ...")
         self.setConfig()
         self.updateInstance()
     
     def setConfig(self):
         self.lastCacheUpdate = self.getTimeMS()
 
-    def getTimeMS(self):
+    def getTimeMS(self,brut=0):
+        if brut == 1:
+            return datetime.now()
         return int(datetime.now().timestamp()*1000)
     
     def updateCache(self):
@@ -39,6 +41,7 @@ class GasFees:
             r = requests.get(self.ethGasUrl)
             json.dump(r.json(),gasF,indent=4)
             self.lastCacheUpdate = self.getTimeMS()
+            logging.info("Cache updated at "+str(self.lastCacheUpdate))
         return 0
 
     def readCache(self):
@@ -63,8 +66,8 @@ class GasFees:
         self.fast_wait = data['fastWait']
         self.fastest_wait = data['fastestWait']
         self.gas_price_range = data['gasPriceRange']
+        logging.info("Instance updated at "+self.getTimeMS(brut=1).strftime("%d/%m/%y, %H:%M:%S"))
 
-        
             
             
         
